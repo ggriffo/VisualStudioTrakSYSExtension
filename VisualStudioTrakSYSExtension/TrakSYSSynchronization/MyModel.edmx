@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tAuditDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AuditHeaderID" Type="int" />
+          <Property Name="AuditDateTime" Type="datetimeoffset" Precision="3" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="TableName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="EntityName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="PrimaryKey01" Type="int" />
+          <Property Name="PrimaryKey02" Type="int" />
+          <Property Name="Operation" Type="int" Nullable="false" />
+          <Property Name="Data" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ModifiedDateTime" Type="datetimeoffset" Precision="3" />
+          <Property Name="UploadedDateTime" Type="datetimeoffset" Precision="3" />
+        </EntityType>
+        <EntityType Name="tAuditHeader">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="AuditDateTime" Type="datetimeoffset" Precision="3" Nullable="false" />
+          <Property Name="User01" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="User01FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="User02" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="User02FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="EntityID" Type="int" />
+          <Property Name="EntityName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="EntityTypeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsDatabaseTransfer" Type="bit" Nullable="false" />
+          <Property Name="ModifiedDateTime" Type="datetimeoffset" Precision="3" />
+          <Property Name="UploadedDateTime" Type="datetimeoffset" Precision="3" />
+        </EntityType>
+        <EntityType Name="tScript">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Guid" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AltName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="ScriptGroupID" Type="int" Nullable="false" />
+          <Property Name="Script" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="IsReadOnly" Type="bit" Nullable="false" />
+          <Property Name="ModifiedDateTime" Type="datetimeoffset" Precision="3" />
+          <Property Name="UploadedDateTime" Type="datetimeoffset" Precision="3" />
+          <Property Name="TemplateData" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tScriptGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Guid" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AltName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="SiteID" Type="int" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="IsReadOnly" Type="bit" Nullable="false" />
+          <Property Name="ModifiedDateTime" Type="datetimeoffset" Precision="3" />
+          <Property Name="UploadedDateTime" Type="datetimeoffset" Precision="3" />
+          <Property Name="TemplateData" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tAuditDetail_tAuditHeader_AuditHeaderID">
+          <End Role="tAuditHeader" Type="Self.tAuditHeader" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tAuditDetail" Type="Self.tAuditDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tAuditHeader">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tAuditDetail">
+              <PropertyRef Name="AuditHeaderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EDBModelStoreContainer">
+          <EntitySet Name="tAuditDetail" EntityType="Self.tAuditDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tAuditHeader" EntityType="Self.tAuditHeader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tScript" EntityType="Self.tScript" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tScriptGroup" EntityType="Self.tScriptGroup" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tAuditDetail_tAuditHeader_AuditHeaderID" Association="Self.FK_tAuditDetail_tAuditHeader_AuditHeaderID">
+            <End Role="tAuditHeader" EntitySet="tAuditHeader" />
+            <End Role="tAuditDetail" EntitySet="tAuditDetail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tAuditDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AuditHeaderID" Type="Int32" />
+          <Property Name="AuditDateTime" Type="DateTimeOffset" Nullable="false" Precision="3" />
+          <Property Name="Login" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TableName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EntityName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PrimaryKey01" Type="Int32" />
+          <Property Name="PrimaryKey02" Type="Int32" />
+          <Property Name="Operation" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ModifiedDateTime" Type="DateTimeOffset" Precision="3" />
+          <Property Name="UploadedDateTime" Type="DateTimeOffset" Precision="3" />
+          <NavigationProperty Name="tAuditHeader" Relationship="Self.FK_tAuditDetail_tAuditHeader_AuditHeaderID" FromRole="tAuditDetail" ToRole="tAuditHeader" />
+        </EntityType>
+        <EntityType Name="tAuditHeader">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="AuditDateTime" Type="DateTimeOffset" Nullable="false" Precision="3" />
+          <Property Name="User01" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User01FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User02" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User02FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EntityID" Type="Int32" />
+          <Property Name="EntityName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EntityTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsDatabaseTransfer" Type="Boolean" Nullable="false" />
+          <Property Name="ModifiedDateTime" Type="DateTimeOffset" Precision="3" />
+          <Property Name="UploadedDateTime" Type="DateTimeOffset" Precision="3" />
+          <NavigationProperty Name="tAuditDetails" Relationship="Self.FK_tAuditDetail_tAuditHeader_AuditHeaderID" FromRole="tAuditHeader" ToRole="tAuditDetail" />
+        </EntityType>
+        <EntityType Name="tScript">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Guid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AltName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ScriptGroupID" Type="Int32" Nullable="false" />
+          <Property Name="Script" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="IsReadOnly" Type="Boolean" Nullable="false" />
+          <Property Name="ModifiedDateTime" Type="DateTimeOffset" Precision="3" />
+          <Property Name="UploadedDateTime" Type="DateTimeOffset" Precision="3" />
+          <Property Name="TemplateData" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tScriptGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Guid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AltName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SiteID" Type="Int32" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Key" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsReadOnly" Type="Boolean" Nullable="false" />
+          <Property Name="ModifiedDateTime" Type="DateTimeOffset" Precision="3" />
+          <Property Name="UploadedDateTime" Type="DateTimeOffset" Precision="3" />
+          <Property Name="TemplateData" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tAuditDetail_tAuditHeader_AuditHeaderID">
+          <End Role="tAuditHeader" Type="Self.tAuditHeader" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tAuditDetail" Type="Self.tAuditDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tAuditHeader">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tAuditDetail">
+              <PropertyRef Name="AuditHeaderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tAuditDetails" EntityType="Self.tAuditDetail" />
+          <EntitySet Name="tAuditHeaders" EntityType="Self.tAuditHeader" />
+          <EntitySet Name="tScripts" EntityType="Self.tScript" />
+          <EntitySet Name="tScriptGroups" EntityType="Self.tScriptGroup" />
+          <AssociationSet Name="FK_tAuditDetail_tAuditHeader_AuditHeaderID" Association="Self.FK_tAuditDetail_tAuditHeader_AuditHeaderID">
+            <End Role="tAuditHeader" EntitySet="tAuditHeaders" />
+            <End Role="tAuditDetail" EntitySet="tAuditDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EDBModelStoreContainer" CdmEntityContainer="EDBEntities">
+          <EntitySetMapping Name="tAuditDetails">
+            <EntityTypeMapping TypeName="EDBModel.tAuditDetail">
+              <MappingFragment StoreEntitySet="tAuditDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AuditHeaderID" ColumnName="AuditHeaderID" />
+                <ScalarProperty Name="AuditDateTime" ColumnName="AuditDateTime" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="EntityName" ColumnName="EntityName" />
+                <ScalarProperty Name="PrimaryKey01" ColumnName="PrimaryKey01" />
+                <ScalarProperty Name="PrimaryKey02" ColumnName="PrimaryKey02" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="UploadedDateTime" ColumnName="UploadedDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tAuditHeaders">
+            <EntityTypeMapping TypeName="EDBModel.tAuditHeader">
+              <MappingFragment StoreEntitySet="tAuditHeader">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AuditDateTime" ColumnName="AuditDateTime" />
+                <ScalarProperty Name="User01" ColumnName="User01" />
+                <ScalarProperty Name="User01FullName" ColumnName="User01FullName" />
+                <ScalarProperty Name="User02" ColumnName="User02" />
+                <ScalarProperty Name="User02FullName" ColumnName="User02FullName" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+                <ScalarProperty Name="EntityName" ColumnName="EntityName" />
+                <ScalarProperty Name="EntityTypeName" ColumnName="EntityTypeName" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="IsDatabaseTransfer" ColumnName="IsDatabaseTransfer" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="UploadedDateTime" ColumnName="UploadedDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tScripts">
+            <EntityTypeMapping TypeName="EDBModel.tScript">
+              <MappingFragment StoreEntitySet="tScript">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AltName" ColumnName="AltName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="ScriptGroupID" ColumnName="ScriptGroupID" />
+                <ScalarProperty Name="Script" ColumnName="Script" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="IsReadOnly" ColumnName="IsReadOnly" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="UploadedDateTime" ColumnName="UploadedDateTime" />
+                <ScalarProperty Name="TemplateData" ColumnName="TemplateData" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tScriptGroups">
+            <EntityTypeMapping TypeName="EDBModel.tScriptGroup">
+              <MappingFragment StoreEntitySet="tScriptGroup">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AltName" ColumnName="AltName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="IsReadOnly" ColumnName="IsReadOnly" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="UploadedDateTime" ColumnName="UploadedDateTime" />
+                <ScalarProperty Name="TemplateData" ColumnName="TemplateData" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

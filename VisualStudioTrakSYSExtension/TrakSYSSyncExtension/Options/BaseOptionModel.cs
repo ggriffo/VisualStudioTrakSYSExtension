@@ -1,20 +1,24 @@
-﻿using Microsoft.VisualStudio.Settings;
+﻿using Microsoft;
+using Microsoft.VisualStudio.Settings;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell.Settings;
-using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Threading;
-using Microsoft;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
-using System;
+using Task = System.Threading.Tasks.Task;
 
-namespace TrakSYSConfigurationOption.Options
+namespace TrakSYSSyncExtension.Options
 {
-    internal class BaseOptionModel<T> where T : BaseOptionModel<T>, new()
+    /// <summary>
+    /// A base class for specifying options
+    /// </summary>
+    internal abstract class BaseOptionModel<T> where T : BaseOptionModel<T>, new()
     {
         private static AsyncLazy<T> _liveModel = new AsyncLazy<T>(CreateAsync, ThreadHelper.JoinableTaskFactory);
         private static AsyncLazy<ShellSettingsManager> _settingsManager = new AsyncLazy<ShellSettingsManager>(GetSettingsManagerAsync, ThreadHelper.JoinableTaskFactory);

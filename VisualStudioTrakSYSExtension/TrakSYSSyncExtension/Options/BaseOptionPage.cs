@@ -1,11 +1,6 @@
 ﻿using Microsoft.VisualStudio.Shell;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace TrakSYSConfigurationOption.Options
+namespace TrakSYSSyncExtension.Options
 {
     internal class BaseOptionPage<T> : DialogPage where T : BaseOptionModel<T>, new()
     {
@@ -13,7 +8,9 @@ namespace TrakSYSConfigurationOption.Options
 
         public BaseOptionPage()
         {
+#pragma warning disable VSTHRD104 // Offer async methods
             _model = ThreadHelper.JoinableTaskFactory.Run(BaseOptionModel<T>.CreateAsync);
+#pragma warning restore VSTHRD104 // Offer async methods
         }
 
         public override object AutomationObject => _model;

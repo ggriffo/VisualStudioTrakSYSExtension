@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="TrakSYSConfigurationOption.dda0f800-4c99-4c1e-87fd-79479e367ee5" Version="1.0" Language="en-US" Publisher="Gustavo Griffo" />
-        <DisplayName>TrakSYSConfigurationOption</DisplayName>
-        <Description xml:space="preserve">TrakSYS Option Configuration for Sync code with Visual Studio</Description>
+        <Identity Id="TrakSYSSyncExtension.a99c9985-b4ec-47a0-b97e-0415e701a4b8" Version="1.0" Language="en-US" Publisher="Gustavo Griffo" />
+        <DisplayName>TrakSYSSyncExtension</DisplayName>
+        <Description xml:space="preserve">Sync TrakSYS Code to Visual Studio and vice-versa</Description>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">

@@ -1,10 +1,15 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using EnvDTE80;
+using Microsoft.VisualStudio.Shell;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Threading;
+using TrakSYSSyncExtension.Options;
 using Task = System.Threading.Tasks.Task;
 
-namespace TrakSYSSyncMenu
+namespace TrakSYSSyncExtension
 {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
@@ -24,13 +29,15 @@ namespace TrakSYSSyncMenu
     /// </para>
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [Guid(TrakSYSSyncMenuPackage.PackageGuidString)]
-    public sealed class TrakSYSSyncMenuPackage : AsyncPackage
+    [ProvideOptionPage(typeof(DialogPageProvider.Configuration), "NEW TrakSYS Configuration", "General", 0, 0, true)]
+    [Guid(TrakSYSSyncExtensionPackage.PackageGuidString)]
+    [ProvideMenuResource("Menus.ctmenu", 1)]
+    public sealed class TrakSYSSyncExtensionPackage : AsyncPackage
     {
         /// <summary>
-        /// TrakSYSSyncMenuPackage GUID string.
+        /// TrakSYSSyncExtensionPackage GUID string.
         /// </summary>
-        public const string PackageGuidString = "d7d129bf-1ea3-4fe6-86c3-e4ea130f1727";
+        public const string PackageGuidString = "1448113c-dcb0-4245-b31f-30da44359f98";
 
         #region Package Members
 
@@ -46,6 +53,8 @@ namespace TrakSYSSyncMenu
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            SyncCommand.serviceProvider = this;
+            await SyncCommand.InitializeAsync(this);
         }
 
         #endregion
